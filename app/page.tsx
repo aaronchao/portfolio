@@ -18,9 +18,9 @@ export default function Home() {
           EXIST
         </h1>
         <p className="mt-6 max-w-[52ch] text-[15px] leading-relaxed opacity-70 sm:text-base">
-          Six products, six gaps nothing else filled — from a movie discovery
-          app that actually weighs Douban, to a transit app whose API key
-          never ships inside it. Below is what each one solves, and how.
+          Six products. Six gaps nothing else filled. Not concepts, not
+          roadmap slides — live, shipped, solving problems that had no
+          answer until they existed.
         </p>
       </header>
 

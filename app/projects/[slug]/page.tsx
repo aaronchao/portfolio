@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Nav } from "@/src/components/Nav";
-import Image from "next/image";
 import { PROJECTS, projectBySlug } from "@/src/data/projects";
+import { BrowserFrame } from "@/src/components/BrowserFrame";
+import { PhoneFrame } from "@/src/components/PhoneFrame";
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -73,8 +74,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         {/* Content column. */}
         <div className="border-t border-black/10 px-4 py-8 sm:px-8 lg:py-16">
           {project.screenshot && (
-            <div className="relative mb-16 aspect-video w-full max-w-3xl overflow-hidden rounded-xl border border-black/10">
-              <Image src={project.screenshot} alt={`${project.name} screenshot`} fill className="object-cover object-top" priority />
+            <div
+              className={`mb-16 flex ${
+                project.screenshotType === "mobile" ? "h-[560px] max-w-xs" : "aspect-[16/10] max-w-3xl"
+              }`}
+            >
+              {project.screenshotType === "mobile" ? (
+                <PhoneFrame src={project.screenshot} alt={`${project.name} screenshot`} priority />
+              ) : (
+                <BrowserFrame src={project.screenshot} alt={`${project.name} screenshot`} priority />
+              )}
             </div>
           )}
 

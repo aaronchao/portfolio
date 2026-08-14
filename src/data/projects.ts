@@ -14,6 +14,10 @@ export type Project = {
    *  those tiles stay flat-colour with logotype, same as the reference
    *  site's non-photo tiles (e.g. "Los Colonos"), rather than faking one. */
   screenshot?: string;
+  /** Mobile shots render inside a phone bezel, object-contain, on the
+   *  tile's own colour — a portrait screenshot force-cropped into a
+   *  landscape tile is what made this look messy in the first place. */
+  screenshotType?: "web" | "mobile";
 };
 
 /**
@@ -30,112 +34,117 @@ export const PROJECTS: Project[] = [
   {
     slug: "fliqpop",
     name: "Fliqpop",
-    tagline: "Movie & series discovery that doesn't ignore Douban",
+    tagline: "The world's opinion, not just Hollywood's",
     color: "#e8503a",
     textColor: "#0b0b0e",
     gap:
-      "Every movie discovery app treats IMDb and Rotten Tomatoes as the default and Douban — the actual opinion of a billion-plus-strong audience — as an afterthought, if it appears at all.",
+      "Every discovery app treats IMDb and Rotten Tomatoes as gospel — and Douban, a billion-plus opinions strong, as a footnote, if it shows up at all.",
     built:
-      "A discovery wall that blends Douban, IMDb and Rotten Tomatoes as a weighted signal, not a naive average — Douban 8.0 means something different from IMDb 8.0, and averaging them raw would bury exactly the films this app exists to surface. A persistent, self-refreshing catalogue of 211,737 titles crawls and enriches itself on Vercel and Supabase's free tiers, entirely on a nightly cron. Buddy accounts let two people see the moment they've both said yes to the same thing.",
+      "A discovery wall that weighs Douban, IMDb and Rotten Tomatoes properly — never averaged, never flattened. Douban 8.0 and IMDb 8.0 aren't the same claim, and treating them as interchangeable buries exactly the films worth surfacing. A self-refreshing catalogue of 211,737 titles maintains itself, nightly, on infrastructure that costs nothing. Buddy accounts surface the moment two people both say yes.",
     highlights: [
-      { label: "Blending", body: "Douban weighted highest, Rotten Tomatoes lowest — consensus and quality are different questions." },
-      { label: "Scale", body: "A 211,737-title catalogue, built and kept fresh on free-tier infrastructure only." },
-      { label: "Buddies", body: "Magic-link accounts, RLS-scoped collections, a match banner when two people both say yes." },
+      { label: "Blending", body: "Douban leads, Rotten Tomatoes follows — consensus and quality were never the same question." },
+      { label: "Scale", body: "211,737 titles, kept fresh forever, on zero paid infrastructure." },
+      { label: "Buddies", body: "Magic-link accounts, a match banner the second two people agree." },
     ],
     links: { live: "https://fliqpop.vercel.app" },
     year: "2026",
     screenshot: "/screenshots/fliqpop.png",
+    screenshotType: "web",
   },
   {
     slug: "wavefm",
     name: "WaveFM",
-    tagline: "Podcast discovery that explains itself",
+    tagline: "Discovery that tells you why",
     color: "#f2b705",
     textColor: "#0b0b0e",
     gap:
-      "Podcast recommendations are black boxes — an endless feed with no reason attached — and every discovery app locks you into its own player, when the show you want to hear about might live on a different app entirely.",
+      "Every podcast app hands you a black-box feed, then locks you into its own player — as if the show you want to hear about could only live in one app.",
     built:
-      "A free, browser-based discovery engine where every recommendation carries an explicit \"why\" — a cluster reason, a rating, a show you already liked — instead of a flat ranked list. Wavr hands you off to whatever app you actually listen in rather than building a competing player nobody asked for. Built entirely inside Vercel's Hobby tier and Supabase's free tier, with cross-device sync via magic-link auth.",
+      "Every recommendation on WaveFM states its case — a cluster, a rating, a show you already loved — instead of a flat ranked list pretending to know best. It hands you off to whatever app you actually listen in and builds no competing player nobody asked for. Free to build, free to run, synced across every device you own.",
     highlights: [
-      { label: "Explainable", body: "Every suggestion carries a stated reason, not just a score." },
-      { label: "Deep-link out", body: "Recommends, then hands off to Apple Podcasts, Spotify, YouTube Music — no in-app player." },
-      { label: "Zero-cost", body: "Free podcast APIs proxied through the app's own routes; no paid key anywhere in the stack." },
+      { label: "Explainable", body: "Every suggestion states its case. No black box, ever." },
+      { label: "Deep-link out", body: "Recommends, then hands off — no in-app player standing between you and the show." },
+      { label: "Zero-cost", body: "Free APIs, proxied and cached. No key, no bill, no compromise." },
     ],
     links: { live: "https://wavefm.vercel.app", github: "https://github.com/aaronchao/wavefm" },
     year: "2026",
     screenshot: "/screenshots/wavefm.jpg",
+    screenshotType: "web",
   },
   {
     slug: "ptvon",
     name: "PTVon",
-    tagline: "Live Melbourne transit, with no API key inside the app",
+    tagline: "Live transit. Zero embedded secrets.",
     color: "#152c6b",
     textColor: "#f2f0ea",
     gap:
-      "Melbourne's official transit app buries live departures behind several taps, and the PTV Timetable API requires a signed, keyed request — a key that can't safely ship inside a public app without anyone who decompiles it walking off with it.",
+      "Melbourne's own transit app buries live departures behind five taps — and the PTV API demands a signed key that no app people can decompile should ever ship with.",
     built:
-      "A hyper-glanceable departures app — pin your stops, get live countdowns, track one stop for exact 10/5/1-minute alerts with an ongoing Lock Screen countdown and Dynamic Island — built keyless. A Cloudflare Worker holds the real PTV credentials, signs every request server-side, and fronts the same API paths the app already expects, so the published build embeds no secret at all. An Apple Watch companion mirrors the stop list over WatchConnectivity.",
+      "A glanceable departures app, built keyless from the ground up: a Cloudflare Worker signs every request server-side, so the published build carries nothing worth stealing. Lock Screen countdowns, Dynamic Island, a native Watch companion — all live, all exact to the minute.",
     highlights: [
-      { label: "Keyless", body: "A signing proxy on Cloudflare Workers — zero PTV credentials in the shipped app." },
-      { label: "Live Activity", body: "Lock Screen countdown + Dynamic Island, driven by exact AlarmManager/BGTask scheduling." },
-      { label: "Watch companion", body: "Stop list mirrored to a native watchOS app over WatchConnectivity." },
+      { label: "Keyless", body: "A signing proxy on Cloudflare Workers — zero credentials shipped, zero credentials to steal." },
+      { label: "Live Activity", body: "Lock Screen countdown, Dynamic Island, exact to the second." },
+      { label: "Watch companion", body: "A native watchOS app, synced live over WatchConnectivity." },
     ],
     links: { github: "https://github.com/aaronchao/PTVon" },
     year: "2026",
     screenshot: "/screenshots/ptvon.png",
+    screenshotType: "mobile",
   },
   {
     slug: "backliner",
     name: "Backliner",
-    tagline: "Your Spotify library, sorted by who actually made it",
+    tagline: "Your library, sorted by who actually made it",
     color: "#1a1a1a",
     textColor: "#f2f0ea",
     gap:
-      "Spotify's Web API has no producer, writer or engineer credits anywhere — not on any endpoint, not on any tier. The credits shown in Spotify's own mobile app come from a private internal endpoint that isn't licensed for third-party use.",
+      "Spotify's API carries no producer credits — not on any tier, not for any price. The real ones sit behind a private endpoint nobody outside Spotify is licensed to touch.",
     built:
-      "An ISRC-keyed enrichment cascade — the one exact-match primary key Spotify's public API does give you — that races Genius and Discogs concurrently for every track, falling back to MusicBrainz only where the fast sources are weakest (pre-2000 releases, or tracks with no known year). The result re-sorts an entire library around the people who made the records, and turns each credited person into a pivot into everything else they touched.",
+      "An ISRC-keyed cascade races Genius and Discogs concurrently for every track, calling on MusicBrainz only where the fast sources are weakest. The result is a library re-sorted around the people who actually made it — every credit a door into everything else they touched.",
     highlights: [
-      { label: "ISRC-keyed", body: "Exact-match lookups, not fuzzy title/artist matching." },
-      { label: "Gated cascade", body: "MusicBrainz called only when it's actually needed — it hard-limits to 1 req/sec." },
-      { label: "Pivot browsing", body: "Every credited person becomes a lens into the rest of their catalogue." },
+      { label: "ISRC-keyed", body: "Exact-match lookups — never a fuzzy guess at title or artist." },
+      { label: "Gated cascade", body: "MusicBrainz called only when it earns its 1-request-per-second cost." },
+      { label: "Pivot browsing", body: "Every credited name becomes a way into the rest of their catalogue." },
     ],
     links: { live: "https://visible-planner-endpoint.ngrok-free.dev" },
     year: "2026",
     screenshot: "/screenshots/backliner.png",
+    screenshotType: "web",
   },
   {
     slug: "lyricson",
     name: "LyricsOn",
-    tagline: "Lyrics on screen in under 3 seconds, from a cold tap",
+    tagline: "On screen before you'd finish typing a search",
     color: "#c9184a",
     textColor: "#f2f0ea",
     gap:
-      "Every lyrics app makes you search — type the song, wait, scroll. None render from a cold tap on whatever's already playing in under three seconds.",
+      "Every lyrics app makes you search first — type the title, wait, scroll. None render from a cold tap on whatever's already playing in under three seconds.",
     built:
-      "A notification-listener service keeps the current track's title, artist and album art warm in memory before the app is even opened, so the cover paints on the first frame with zero network calls. Lyrics resolve via a two-tier parallel race — synced sources (LRCLIB, Netease, QQ Music) first, plain-text sources second — with a hidden WebView as the last resort: a real Chrome engine on the device's residential IP, so it clears the Cloudflare challenges and site blocks that kill every API-only scraper.",
+      "The now-playing track sits warm in memory before the app even opens, so the cover paints instantly, no network required. Lyrics arrive through a parallel race across three sources at once, with a hidden browser engine as the last resort — real enough to clear every block that kills a plain scraper.",
     highlights: [
-      { label: "Cold start", body: "Notification-listener keeps now-playing metadata warm; no polling, no network for the cover art." },
-      { label: "Parallel race", body: "Multiple lyric sources fired concurrently — first non-empty hit wins, the rest cancel." },
-      { label: "WebView fallback", body: "A real browser engine on-device reaches the long tail nothing else can." },
+      { label: "Cold start", body: "Metadata warm before launch — zero network just to paint the cover." },
+      { label: "Parallel race", body: "Every source fires at once. First real hit wins, the rest fall away." },
+      { label: "WebView fallback", body: "A genuine browser, on-device — reaches what nothing else can." },
     ],
     links: {},
     year: "2026",
     screenshot: "/screenshots/lyricson.png",
+    screenshotType: "mobile",
   },
   {
     slug: "youtubify",
     name: "youtubify",
-    tagline: "Spotify → YouTube, with zero fallback substitutions",
+    tagline: "Only the real video. Never a substitute.",
     color: "#2b2d42",
     textColor: "#f2f0ea",
     gap:
-      "Every \"Spotify to YouTube\" tool just grabs the first search result — lyric videos, fan reuploads, sped-up edits and auto-generated \"Topic\" audio channels end up sitting in a playlist next to real music videos.",
+      "Every Spotify-to-YouTube tool grabs the first search result — lyric videos, fan reuploads, sped-up edits, sitting beside the real thing as if it doesn't matter.",
     built:
-      "A three-tier official-channel allowlist — the artist's own channel, then approved live-performance channels, then approved curated aggregators — checked by channel ID, never by name, since names are trivially spoofable. If nothing in any tier qualifies, the track is skipped and logged rather than silently backfilled with whatever ranked first. Idempotent and crash-safe: interrupt it anytime, including at YouTube's daily quota limit, and the next run resumes exactly where it stopped.",
+      "A three-tier channel allowlist, checked by ID — never by name, since names lie and IDs can't. Nothing qualifies, the track is skipped and logged, never silently swapped for whatever ranked first. Crash-safe and idempotent: interrupted anywhere, it resumes exactly where it stopped.",
     highlights: [
-      { label: "ID allowlist", body: "Channels approved by ID, never by name — names can be spoofed, IDs can't." },
-      { label: "Skip, don't substitute", body: "No qualifying video means the track is logged and skipped, never backfilled." },
-      { label: "Resumable", body: "Crash-safe and idempotent — picks up exactly where it stopped, even across quota resets." },
+      { label: "ID allowlist", body: "Channels approved by ID, never by name — names can be spoofed." },
+      { label: "Skip, don't substitute", body: "No qualifying match means no track. Never a stand-in." },
+      { label: "Resumable", body: "Crash-safe and idempotent — resumes exactly where it stopped, every time." },
     ],
     links: { github: "https://github.com/aaronchao/youtubify" },
     year: "2026",

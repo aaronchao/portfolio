@@ -1,18 +1,22 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Project } from "@/src/data/projects";
+import { BrowserFrame } from "./BrowserFrame";
+import { PhoneFrame } from "./PhoneFrame";
 
 /**
  * Two tile behaviours, matching buenasuerte.cl's actual mixed pattern
  * (verified live, not assumed): tiles with a real photo show it by
- * default and the image fades OUT on hover to reveal a flat-colour card
- * underneath — not a zoom/scale on the image. Tiles with no photo
- * (nothing to fade from) are flat-colour always, same as their "Los
- * Colonos" logotype tile. Which behaviour a project gets is decided by
- * whether `screenshot` exists, not a manual per-tile flag.
+ * default and it fades OUT on hover to reveal a flat-colour card
+ * underneath — not a zoom/scale. Tiles with no photo are flat-colour
+ * always, same as their "Los Colonos" logotype tile.
+ *
+ * Screenshots render inside a device frame (BrowserFrame/PhoneFrame),
+ * padded and centred on the tile's own colour, rather than force-cropped
+ * with object-cover — a portrait phone screenshot stretched into a
+ * landscape box was the actual cause of "messy."
  */
 export function ProjectTile({ project, large = false }: { project: Project; large?: boolean }) {
   return (
@@ -20,20 +24,17 @@ export function ProjectTile({ project, large = false }: { project: Project; larg
       href={`/projects/${project.slug}`}
       data-cursor="link"
       className={`group relative flex flex-col justify-between overflow-hidden border border-black/10 p-6 sm:p-8 ${
-        large ? "min-h-[420px] sm:col-span-2" : "min-h-[280px]"
+        large ? "min-h-[460px] sm:col-span-2" : "min-h-[340px]"
       }`}
       style={{ backgroundColor: project.color, color: project.textColor }}
     >
       {project.screenshot && (
-        <div className="absolute inset-0 opacity-100 transition-opacity duration-300 ease-out group-hover:opacity-0">
-          <Image
-            src={project.screenshot}
-            alt=""
-            fill
-            sizes={large ? "100vw" : "50vw"}
-            className="object-cover object-top"
-            priority={large}
-          />
+        <div className="absolute inset-0 flex items-center justify-center p-8 pt-16 opacity-100 transition-opacity duration-300 ease-out group-hover:opacity-0 sm:p-10 sm:pt-20">
+          {project.screenshotType === "mobile" ? (
+            <PhoneFrame src={project.screenshot} alt={`${project.name} screenshot`} priority={large} />
+          ) : (
+            <BrowserFrame src={project.screenshot} alt={`${project.name} screenshot`} priority={large} />
+          )}
         </div>
       )}
 
