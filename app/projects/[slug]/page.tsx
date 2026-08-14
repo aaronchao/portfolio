@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Nav } from "@/src/components/Nav";
+import Image from "next/image";
 import { PROJECTS, projectBySlug } from "@/src/data/projects";
 
 export function generateStaticParams() {
@@ -71,6 +72,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         {/* Content column. */}
         <div className="border-t border-black/10 px-4 py-8 sm:px-8 lg:py-16">
+          {project.screenshot && (
+            <div className="relative mb-16 aspect-video w-full max-w-3xl overflow-hidden rounded-xl border border-black/10">
+              <Image src={project.screenshot} alt={`${project.name} screenshot`} fill className="object-cover object-top" priority />
+            </div>
+          )}
+
           <section id="gap" className="max-w-[65ch] scroll-mt-8">
             <p className="text-[12px] uppercase tracking-widest opacity-50"># The gap</p>
             <p className="mt-3 text-xl leading-relaxed sm:text-2xl">{project.gap}</p>

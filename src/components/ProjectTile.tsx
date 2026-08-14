@@ -1,9 +1,19 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Project } from "@/src/data/projects";
 
+/**
+ * Two tile behaviours, matching buenasuerte.cl's actual mixed pattern
+ * (verified live, not assumed): tiles with a real photo show it by
+ * default and the image fades OUT on hover to reveal a flat-colour card
+ * underneath — not a zoom/scale on the image. Tiles with no photo
+ * (nothing to fade from) are flat-colour always, same as their "Los
+ * Colonos" logotype tile. Which behaviour a project gets is decided by
+ * whether `screenshot` exists, not a manual per-tile flag.
+ */
 export function ProjectTile({ project, large = false }: { project: Project; large?: boolean }) {
   return (
     <Link
@@ -14,8 +24,24 @@ export function ProjectTile({ project, large = false }: { project: Project; larg
       }`}
       style={{ backgroundColor: project.color, color: project.textColor }}
     >
-      <div className="flex items-start justify-between">
-        <div>
+      {project.screenshot && (
+        <div className="absolute inset-0 opacity-100 transition-opacity duration-300 ease-out group-hover:opacity-0">
+          <Image
+            src={project.screenshot}
+            alt=""
+            fill
+            sizes={large ? "100vw" : "50vw"}
+            className="object-cover object-top"
+            priority={large}
+          />
+        </div>
+      )}
+
+      <div className="relative z-10 flex items-start justify-between">
+        <div
+          className="rounded px-2 py-1 -ml-2 -mt-1"
+          style={{ backgroundColor: project.screenshot ? project.color : "transparent" }}
+        >
           <p className="text-[11px] font-medium uppercase tracking-widest opacity-60">{project.year}</p>
           <p className="mt-1 max-w-[26ch] text-[13px] leading-snug opacity-80">{project.tagline}</p>
         </div>
@@ -29,7 +55,12 @@ export function ProjectTile({ project, large = false }: { project: Project; larg
           </svg>
         </motion.span>
       </div>
-      <h3 className={`font-display leading-[0.9] tracking-tight ${large ? "text-6xl sm:text-7xl" : "text-4xl sm:text-5xl"}`}>
+
+      <h3
+        className={`relative z-10 font-display leading-[0.9] tracking-tight transition-opacity duration-300 ${
+          project.screenshot ? "opacity-0 group-hover:opacity-100" : ""
+        } ${large ? "text-6xl sm:text-7xl" : "text-4xl sm:text-5xl"}`}
+      >
         {project.name}
       </h3>
     </Link>

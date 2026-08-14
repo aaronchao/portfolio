@@ -9,6 +9,11 @@ export type Project = {
   highlights: { label: string; body: string }[];
   links: { live?: string; github?: string };
   year: string;
+  /** Real product screenshot — public/screenshots/. Undefined means no
+   *  visual asset exists anywhere (no live URL, nothing in the repo) —
+   *  those tiles stay flat-colour with logotype, same as the reference
+   *  site's non-photo tiles (e.g. "Los Colonos"), rather than faking one. */
+  screenshot?: string;
 };
 
 /**
@@ -39,6 +44,7 @@ export const PROJECTS: Project[] = [
     ],
     links: { live: "https://fliqpop.vercel.app" },
     year: "2026",
+    screenshot: "/screenshots/fliqpop.png",
   },
   {
     slug: "wavefm",
@@ -57,6 +63,7 @@ export const PROJECTS: Project[] = [
     ],
     links: { live: "https://wavefm.vercel.app", github: "https://github.com/aaronchao/wavefm" },
     year: "2026",
+    screenshot: "/screenshots/wavefm.jpg",
   },
   {
     slug: "ptvon",
@@ -75,6 +82,7 @@ export const PROJECTS: Project[] = [
     ],
     links: { github: "https://github.com/aaronchao/PTVon" },
     year: "2026",
+    screenshot: "/screenshots/ptvon.png",
   },
   {
     slug: "backliner",
@@ -111,6 +119,7 @@ export const PROJECTS: Project[] = [
     ],
     links: {},
     year: "2026",
+    screenshot: "/screenshots/lyricson.png",
   },
   {
     slug: "youtubify",
