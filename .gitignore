@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Next.js auto-generates these on dev start; not used, kept out
+AGENTS.md
+CLAUDE.md
