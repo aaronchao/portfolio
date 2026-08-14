@@ -99,8 +99,9 @@ export const PROJECTS: Project[] = [
       { label: "Gated cascade", body: "MusicBrainz called only when it's actually needed — it hard-limits to 1 req/sec." },
       { label: "Pivot browsing", body: "Every credited person becomes a lens into the rest of their catalogue." },
     ],
-    links: {},
+    links: { live: "https://visible-planner-endpoint.ngrok-free.dev" },
     year: "2026",
+    screenshot: "/screenshots/backliner.png",
   },
   {
     slug: "lyricson",
