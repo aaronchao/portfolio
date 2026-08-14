@@ -35,3 +35,16 @@ body {
 .font-display {
   font-family: var(--font-display), var(--font-sans), sans-serif;
 }
+
+/* Bento grid areas (#48) — six hand-placed slots, sized by content type
+   rather than uniform tiles. See app/page.tsx for the reasoning. */
+@media (min-width: 640px) {
+  .projects-grid {
+    grid-template-areas:
+      "fliqpop fliqpop ptvon"
+      "fliqpop fliqpop ptvon"
+      "wavefm backliner lyricson"
+      "youtubify backliner lyricson";
+    grid-template-rows: repeat(4, minmax(220px, 1fr));
+  }
+}

@@ -7,33 +7,35 @@ import { BrowserFrame } from "./BrowserFrame";
 import { PhoneFrame } from "./PhoneFrame";
 
 /**
- * Two tile behaviours, matching buenasuerte.cl's actual mixed pattern
- * (verified live, not assumed): tiles with a real photo show it by
- * default and it fades OUT on hover to reveal a flat-colour card
- * underneath — not a zoom/scale. Tiles with no photo are flat-colour
- * always, same as their "Los Colonos" logotype tile.
+ * Sized by the parent bento grid (`gridArea: project.slug`, see
+ * globals.css `.projects-grid`), not a `large` boolean — tile shape now
+ * follows content type: tall for phone screenshots, wide for web ones.
  *
- * Screenshots render inside a device frame (BrowserFrame/PhoneFrame),
- * padded and centred on the tile's own colour, rather than force-cropped
- * with object-cover — a portrait phone screenshot stretched into a
- * landscape box was the actual cause of "messy."
+ * Hover behaviour matches buenasuerte.cl (verified live): a photo fades
+ * OUT on hover to reveal a flat-colour card underneath, never a zoom.
+ * Tiles with no photo (youtubify) are flat-colour always.
  */
-export function ProjectTile({ project, large = false }: { project: Project; large?: boolean }) {
+export function ProjectTile({ project }: { project: Project }) {
+  const isHero = project.slug === "fliqpop";
+  const isTall = project.screenshotType === "mobile";
+
   return (
     <Link
       href={`/projects/${project.slug}`}
       data-cursor="link"
-      className={`group relative flex flex-col justify-between overflow-hidden border border-black/10 p-6 sm:p-8 ${
-        large ? "min-h-[460px] sm:col-span-2" : "min-h-[340px]"
-      }`}
-      style={{ backgroundColor: project.color, color: project.textColor }}
+      className="group relative flex min-h-[220px] flex-col justify-between overflow-hidden p-6 sm:p-8"
+      style={{ backgroundColor: project.color, color: project.textColor, gridArea: project.slug }}
     >
       {project.screenshot && (
-        <div className="absolute inset-0 flex items-center justify-center p-8 pt-16 opacity-100 transition-opacity duration-300 ease-out group-hover:opacity-0 sm:p-10 sm:pt-20">
-          {project.screenshotType === "mobile" ? (
-            <PhoneFrame src={project.screenshot} alt={`${project.name} screenshot`} priority={large} />
+        <div
+          className={`absolute inset-0 flex items-center justify-center opacity-100 transition-opacity duration-300 ease-out group-hover:opacity-0 ${
+            isTall ? "p-6 pt-16 sm:p-8 sm:pt-20" : "p-6 pt-14 sm:p-10 sm:pt-16"
+          }`}
+        >
+          {isTall ? (
+            <PhoneFrame src={project.screenshot} alt={`${project.name} screenshot`} priority={isHero} />
           ) : (
-            <BrowserFrame src={project.screenshot} alt={`${project.name} screenshot`} priority={large} />
+            <BrowserFrame src={project.screenshot} alt={`${project.name} screenshot`} priority={isHero} />
           )}
         </div>
       )}
@@ -60,7 +62,7 @@ export function ProjectTile({ project, large = false }: { project: Project; larg
       <h3
         className={`relative z-10 font-display leading-[0.9] tracking-tight transition-opacity duration-300 ${
           project.screenshot ? "opacity-0 group-hover:opacity-100" : ""
-        } ${large ? "text-6xl sm:text-7xl" : "text-4xl sm:text-5xl"}`}
+        } ${isHero ? "text-6xl sm:text-7xl" : "text-4xl sm:text-5xl"}`}
       >
         {project.name}
       </h3>

@@ -24,9 +24,20 @@ export default function Home() {
         </p>
       </header>
 
-      <section id="projects" className="grid grid-cols-1 border-t border-black/10 sm:grid-cols-2">
-        {PROJECTS.map((p, i) => (
-          <ProjectTile key={p.slug} project={p} large={i === 0} />
+      {/*
+        Deliberate bento grid, not auto-flowing masonry — six fixed items,
+        hand-placed for precise control rather than approximated. Mobile-
+        screenshot projects (PTVon, LyricsOn) get tall narrow slots that
+        match a phone's own aspect ratio, so the device frame fills its
+        tile instead of floating in empty space. Web-screenshot projects
+        get wide slots. youtubify (no screenshot) gets the compact
+        flat-colour slot, the role "Reel" plays on the reference site.
+        Areas defined in globals.css (#projects-grid) since Tailwind has
+        no arbitrary grid-template-areas utility.
+      */}
+      <section id="projects" className="projects-grid grid grid-cols-1 gap-px border-t border-black/10 bg-black/10 sm:grid-cols-3">
+        {PROJECTS.map((p) => (
+          <ProjectTile key={p.slug} project={p} />
         ))}
       </section>
 
