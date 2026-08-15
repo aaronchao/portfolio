@@ -8,14 +8,8 @@ export default function Home() {
       <Nav />
 
       <header className="px-4 pb-10 pt-6 sm:px-8 sm:pb-16">
-        <h1 className="font-display leading-[0.85] tracking-tight text-[15vw] sm:text-[9vw]">
-          I BUILT
-          <br />
-          EVERYTHING
-          <br />
-          THAT DOESN&apos;T
-          <br />
-          EXIST
+        <h1 className="font-display leading-[0.9] tracking-tight text-[7.5vw] sm:text-[4.5vw]">
+          I build what&apos;s missing.
         </h1>
         <p className="mt-6 max-w-[52ch] text-[15px] leading-relaxed opacity-70 sm:text-base">
           Six products. Six gaps nothing else filled. Not concepts, not
@@ -42,7 +36,7 @@ export default function Home() {
       </section>
 
       <footer className="flex items-center justify-between px-4 py-10 text-[12px] uppercase tracking-widest opacity-60 sm:px-8">
-        <span>© {new Date().getFullYear()} Aaron Liu</span>
+        <span>© {new Date().getFullYear()} Aaron Chao</span>
         <a href="mailto:aaronchao@gmail.com" data-cursor="link">
           aaronchao@gmail.com
         </a>

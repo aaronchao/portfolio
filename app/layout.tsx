@@ -7,7 +7,7 @@ const sans = Inter({ variable: "--font-sans", subsets: ["latin"] });
 const display = Archivo_Black({ variable: "--font-display", subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
-  title: "Aaron Liu — I build what doesn't exist",
+  title: "Aaron Chao — I build what's missing",
   description:
     "Fliqpop, WaveFM, PTVon, Backliner, LyricsOn, youtubify — six things that didn't exist until they were built.",
 };

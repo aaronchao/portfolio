@@ -68,7 +68,7 @@ export const PROJECTS: Project[] = [
     ],
     links: { live: "https://wavefm.vercel.app", github: "https://github.com/aaronchao/wavefm" },
     year: "2026",
-    screenshot: "/screenshots/wavefm.jpg",
+    screenshot: "/screenshots/wavefm.png",
     screenshotType: "web",
   },
   {
